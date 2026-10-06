@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PsyContent Creator AI - Storyboard & AI Image Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .scene-card {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen pb-20 selection:bg-indigo-200 selection:text-indigo-900">
+
+    <div class="max-w-6xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-10">
+            <div class="inline-flex items-center justify-center p-4 bg-indigo-100 rounded-full mb-4 shadow-inner ring-4 ring-white">
+                <svg class="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+            </div>
+            <h1 class="text-4xl font-black text-slate-900 tracking-tight sm:text-6xl mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-purple-600">PsyContent AI</h1>
+            <h2 class="text-xl font-semibold text-indigo-500 mb-4 tracking-wide uppercase">Storyboard & AI Image Generator</h2>
+            <p class="text-base sm:text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">
+                Buat ide konten psikologi mendalam, pecah adegan super cepat 1 kalimat per gambar, lengkap dengan <strong>fitur Generator Gambar AI</strong> dengan pilihan aspek rasio (16:9 / 9:16) untuk setiap adegan!
+            </p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 max-w-3xl mx-auto mb-12 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+                <!-- Durasi Selector -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-slate-700 uppercase tracking-wide">Target Durasi</label>
+                    <div class="relative">
+                        <select id="durationSelect" class="block w-full pl-4 pr-10 py-3 text-base border-2 border-slate-200 focus:outline-none focus:ring-0 focus:border-indigo-500 sm:text-sm rounded-xl transition-colors appearance-none bg-slate-50 hover:bg-white font-medium">
+                            <option value="shorts">⏱ YT Shorts (< 60 Detik)</option>
+                            <option value="medium">📺 Standar (2-3 Menit)</option>
+                            <option value="long">🍿 Panjang (5-10 Menit)</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Style Selector -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-slate-700 uppercase tracking-wide">Gaya Visual</label>
+                    <div class="relative">
+                        <select id="visualStyleSelect" class="block w-full pl-4 pr-10 py-3 text-base border-2 border-slate-200 focus:outline-none focus:ring-0 focus:border-purple-500 sm:text-sm rounded-xl transition-colors appearance-none bg-slate-50 hover:bg-white font-medium">
+                            <option value="Chalkboard Art (Seni Papan Tulis Kapur)">✏️ Chalkboard Art</option>
+                            <option value="Black and White Chalkboard Art (Seni Papan Tulis Kapur Hitam Putih)">⚫⚪ B&W Chalkboard Art</option>
+                            <option value="Stick Figure Doodle (Coretan Orang Lidi)">🖍️ Stick Figure Doodle</option>
+                            <option value="2D Flat Vector Illustration (Ilustrasi Vektor 2D)">🎨 2D Flat Vector</option>
+                            <option value="Educational Infographic Cartoon (Kartun Infografis Edukasi)">📊 Edu-Infographic</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aspect Ratio Selector -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-bold text-slate-700 uppercase tracking-wide">Rasio Gambar AI</label>
+                    <div class="relative">
+                        <select id="aspectRatioSelect" class="block w-full pl-4 pr-10 py-3 text-base border-2 border-slate-200 focus:outline-none focus:ring-0 focus:border-pink-500 sm:text-sm rounded-xl transition-colors appearance-none bg-slate-50 hover:bg-white font-medium">
+                            <option value="16:9">💻 Lanskap (16:9)</option>
+                            <option value="9:16">📱 Potret (9:16)</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-8 space-y-2">
+                <label class="block text-sm font-bold text-slate-700 uppercase tracking-wide">Fokus Topik / Kata Kunci (Opsional)</label>
+                <input type="text" id="keywordInput" placeholder="Contoh: Psikosomatis, Inner Child, Gut-Brain Axis, Quarter Life Crisis..." class="block w-full px-4 py-3 text-base border-2 border-slate-200 focus:outline-none focus:ring-0 focus:border-indigo-500 rounded-xl transition-colors bg-slate-50 hover:bg-white font-medium placeholder-slate-400">
+                <p class="text-xs text-slate-500 font-medium mt-1">Isi jika Anda ingin membahas topik tertentu. Kosongkan jika ingin AI mencari ide sains psikologi secara acak.</p>
+            </div>
+
+            <!-- Generate Button -->
+            <div class="flex justify-center">
+                <button id="generateBtn" onclick="generateWithAI()" class="w-full sm:w-auto group relative inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white transition-all duration-300 bg-slate-900 border border-transparent rounded-2xl shadow-xl hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:scale-[1.02]">
+                    <svg class="w-6 h-6 mr-3 text-indigo-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                    </svg>
+                    Minta AI Buatkan 3 Ide Konten
+                </button>
+            </div>
+        </div>
+
+        <div id="loadingIndicator" class="hidden flex flex-col justify-center items-center py-16">
+            <div class="relative w-20 h-20 mb-6">
+                <div class="absolute inset-0 rounded-full border-4 border-slate-100"></div>
+                <div class="absolute inset-0 rounded-full border-4 border-indigo-600 border-t-transparent animate-spin"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-indigo-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800 mb-2">Gemini AI sedang berpikir...</h3>
+            <p class="text-slate-500 font-medium animate-pulse text-center max-w-md">Menyusun topik psikologi unik, menyelaraskan gaya visual spesifik, dan memotong naskah 1 kalimat per adegan.</p>
+        </div>
+
+        <div id="errorMessage" class="hidden max-w-2xl mx-auto bg-red-50 border-l-4 border-red-500 p-6 rounded-xl shadow-sm mb-8">
+            <div class="flex items-start">
+                <svg class="w-6 h-6 text-red-500 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div>
+                    <h3 class="text-lg font-bold text-red-800 mb-1">Gagal Menghubungkan ke AI</h3>
+                    <p id="errorText" class="text-red-600 text-sm">Terjadi kesalahan saat memproses permintaan.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="contentDisplay" class="hidden opacity-0 transition-opacity duration-700 max-w-5xl mx-auto">
+            
+            <div class="flex flex-wrap justify-center gap-3 mb-8 bg-white p-3 rounded-2xl shadow-sm border border-slate-200" id="topicTabsContainer">
+                <!-- JS Tabs Generated Here -->
+            </div>
+
+            <div class="space-y-8">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-2xl p-6 md:p-8 border border-slate-200 shadow-sm relative hover:shadow-md transition-all">
+                        <button onclick="copyToText('titleOutput')" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors" title="Salin Judul">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </button>
+                        <h3 class="text-xs uppercase tracking-widest text-indigo-500 font-bold mb-3 flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path></svg>
+                            Judul Video
+                        </h3>
+                        <h2 id="titleOutput" class="text-2xl md:text-3xl font-black text-slate-900 pr-8 leading-tight"></h2>
+                    </div>
+
+                    <div class="bg-indigo-900 rounded-2xl p-6 md:p-8 border border-indigo-800 shadow-md relative hover:shadow-lg transition-all text-white">
+                         <button onclick="copyToText('themeOutput')" class="absolute top-4 right-4 p-2 text-indigo-300 hover:text-white hover:bg-indigo-800 rounded-lg transition-colors" title="Salin Tema">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </button>
+                        <h3 class="text-xs uppercase tracking-widest text-indigo-300 font-bold mb-3 flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                            Teori/Tema Psikologi
+                        </h3>
+                        <p id="themeOutput" class="text-indigo-50 leading-relaxed pr-8 text-sm md:text-base font-medium"></p>
+                    </div>
+                </div>
+
+                <div class="bg-teal-900 rounded-2xl p-6 md:p-8 border border-teal-800 shadow-md relative hover:shadow-lg transition-all text-white">
+                    <button onclick="copyToText('referenceOutput')" class="absolute top-4 right-4 p-2 text-teal-300 hover:text-white hover:bg-teal-800 rounded-lg transition-colors" title="Salin Referensi">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </button>
+                    <h3 class="text-xs uppercase tracking-widest text-teal-300 font-bold mb-3 flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                        Fakta Medis & Jurnal Keilmuan
+                    </h3>
+                    <p id="referenceOutput" class="text-teal-50 leading-relaxed pr-8 text-sm md:text-base font-medium"></p>
+                </div>
+
+                <!-- Bagian Generator Thumbnail YouTube -->
+                <div class="bg-gradient-to-r from-orange-500 to-rose-500 rounded-3xl p-6 md:p-8 border border-orange-400 shadow-md relative hover:shadow-lg transition-all text-white">
+                    <h3 class="text-sm uppercase tracking-widest text-orange-100 font-black mb-3 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        Thumbnail Video (High CTR)
+                    </h3>
+                    <div class="mb-5 bg-black/20 p-4 rounded-xl border border-white/20">
+                        <p class="text-xs uppercase text-orange-200 font-bold mb-1">Arahan Visual AI:</p>
+                        <p id="thumbnailPromptOutput" class="text-white text-sm md:text-base font-medium italic leading-relaxed"></p>
+                    </div>
+                    
+                    <div id="thumbnail_container" class="hidden mb-5 rounded-2xl overflow-hidden border-4 border-white/30 shadow-2xl bg-slate-900 flex justify-center items-center relative group aspect-video max-w-3xl mx-auto">
+                        <img id="thumbnail_img" class="w-full h-full object-cover" alt="Generated Thumbnail">
+                        <a id="thumbnail_download" download="thumbnail-youtube.png" class="absolute bottom-4 right-4 bg-white/95 hover:bg-white text-slate-900 px-5 py-2.5 rounded-xl text-sm font-bold shadow-xl flex items-center space-x-2 transition-transform transform hover:scale-105 opacity-0 group-hover:opacity-100">
+                            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            <span>Download (16:9)</span>
+                        </a>
+                    </div>
+                    
+                    <button id="generateThumbnailBtn" onclick="generateThumbnail()" class="w-full sm:w-auto mx-auto py-3.5 px-8 bg-white hover:bg-slate-50 text-orange-600 rounded-2xl text-base font-black transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center space-x-3">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <span>Generate Gambar Thumbnail</span>
+                    </button>
+                </div>
+
+                <div class="bg-gradient-to-br from-slate-100 to-slate-200 rounded-3xl p-2 sm:p-3 shadow-inner relative">
+                    <div class="bg-white rounded-[1.25rem] p-5 sm:p-8 border border-white/50 shadow-sm">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-8 gap-4 border-b border-slate-100 pb-6">
+                            <div>
+                                <h3 class="text-xl text-slate-800 font-black flex items-center">
+                                    <svg class="w-7 h-7 mr-3 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                    Storyboard & Generator Gambar AI
+                                </h3>
+                                <p class="text-sm text-slate-500 mt-1 font-medium">Gaya Visual: <span id="displayStyle" class="text-purple-600 font-bold"></span> | Rasio: <span id="displayRatio" class="text-pink-600 font-bold"></span></p>
+                            </div>
+                            
+                            <button onclick="copyStoryboard()" class="text-sm flex items-center font-bold text-white bg-slate-900 hover:bg-indigo-600 px-5 py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg w-full sm:w-auto justify-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                Salin Seluruh Script
+                            </button>
+                        </div>
+                        
+                        <div id="hookOutput" class="mb-10 relative">
+                            <!-- Hook diisi via JS -->
+                        </div>
+
+                        <div class="space-y-6" id="scenesOutput">
+                            <!-- JS akan merender format storyboard & gambar generator di sini -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative hover:shadow-md transition-all">
+                        <button onclick="copyToText('captionOutput')" class="absolute top-4 right-4 p-2 text-slate-400 hover:text-green-600 hover:bg-green-50 rounded-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </button>
+                        <h3 class="text-xs uppercase tracking-widest text-slate-400 font-bold mb-4 flex items-center">
+                            <span class="w-2.5 h-2.5 rounded-full bg-green-500 mr-2 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></span> Caption YouTube / Sosmed
+                        </h3>
+                        <p id="captionOutput" class="text-slate-600 text-sm leading-relaxed whitespace-pre-line pr-8"></p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-blue-50/50 rounded-2xl p-5 border border-blue-100 shadow-sm relative group hover:bg-blue-50 transition-colors">
+                            <button onclick="copyToText('hashtagsLongOutput')" class="absolute top-3 right-3 p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-100 rounded-lg">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            </button>
+                            <h3 class="text-[10px] uppercase tracking-widest text-blue-500 font-bold mb-2">Hashtags (Video Panjang)</h3>
+                            <p id="hashtagsLongOutput" class="text-blue-800 font-medium text-xs pr-6 leading-relaxed"></p>
+                        </div>
+
+                        <div class="bg-pink-50/50 rounded-2xl p-5 border border-pink-100 shadow-sm relative group hover:bg-pink-50 transition-colors">
+                            <button onclick="copyToText('hashtagsShortsOutput')" class="absolute top-3 right-3 p-1.5 text-slate-400 hover:text-pink-600 hover:bg-pink-100 rounded-lg">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                            </button>
+                            <h3 class="text-[10px] uppercase tracking-widest text-pink-500 font-bold mb-2">Hashtags (YT Shorts/Reels)</h3>
+                            <p id="hashtagsShortsOutput" class="text-pink-800 font-medium text-xs pr-6 leading-relaxed"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center space-x-3 pointer-events-none z-50">
+        <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span class="font-semibold text-sm">Berhasil disalin!</span>
+    </div>
+
+    <script>
+        let aiGeneratedData = [];
+        let activeIndex = 0;
+
+        const generateBtn = document.getElementById('generateBtn');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const contentDisplay = document.getElementById('contentDisplay');
+        const topicTabsContainer = document.getElementById('topicTabsContainer');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const toast = document.getElementById('toast');
+
+        const titleOutput = document.getElementById('titleOutput');
+        const themeOutput = document.getElementById('themeOutput');
+        const referenceOutput = document.getElementById('referenceOutput');
+        const displayStyle = document.getElementById('displayStyle');
+        const displayRatio = document.getElementById('displayRatio');
+        const hookOutput = document.getElementById('hookOutput');
+        const scenesOutput = document.getElementById('scenesOutput');
+        const captionOutput = document.getElementById('captionOutput');
+        const hashtagsLongOutput = document.getElementById('hashtagsLongOutput');
+        const hashtagsShortsOutput = document.getElementById('hashtagsShortsOutput');
+        const thumbnailPromptOutput = document.getElementById('thumbnailPromptOutput');
+
+        async function generateWithAI() {
+            errorMessage.classList.add('hidden');
+            generateBtn.disabled = true;
+            generateBtn.classList.add('opacity-80', 'cursor-not-allowed');
+            loadingIndicator.classList.remove('hidden');
+            contentDisplay.classList.add('hidden', 'opacity-0');
+
+            const duration = document.getElementById('durationSelect').value;
+            const style = document.getElementById('visualStyleSelect').value;
+            const aspectRatio = document.getElementById('aspectRatioSelect').value;
+            const keyword = document.getElementById('keywordInput').value.trim();
+            
+            let sceneCount = 15; // Shorts
+        if (duration === 'medium') sceneCount = 30; 
+        if (duration === 'long') sceneCount = 55; 
+
+        const keywordPrompt = keyword ? `\nFOKUS TOPIK: Pastikan ide yang dibuat berpusat, mengeksplorasi, atau terhubung erat dengan kata kunci berikut: "${keyword}".\n` : "";
+
+        const promptText = `
+            Bertindaklah sebagai psikolog klinis ahli, dokter spesialis, dan kreator konten video cerita bergambar (faceless story) yang sangat viral. 
+            Buatlah 3 opsi ide konten yang SANGAT BERBEDA satu sama lain mengenai topik psikologi, pikiran, hati, perasaan, atau hubungan aneh antara emosi dan fungsi fisik tubuh manusia. Topik harus relate dengan kehidupan modern (zaman now) tapi berisi rahasia sains yang jarang diketahui orang awam.${keywordPrompt}
+
+            ATURAN TOPIK (WAJIB BERVARIASI & VALID SECARA MEDIS/SAINS):
+            - WAJIB didasarkan pada referensi keilmuan yang valid (seperti jurnal medis, neurosains, biologi, psikosomatis, atau psikologi murni).
+            - Pada bagian "scientific_reference", jelaskan secara detail namun bahasa mudah dimengerti mengenai landasan medisnya (misal: "Menurut penelitian neurosains...", "Secara medis, hormon kortisol menyebabkan...", "Fakta psikologi klinis menyebutkan...").
+            - Jangan terus-menerus membahas dopamin atau stres biasa! Eksplorasi sudut pandang lain (Gut-brain axis, amygdala hijack, psikosomatis spesifik, memori palsu, dll).
+            - Ketiga ide (Ide 1, 2, dan 3) HARUS berasal dari cabang atau sub-topik psikologi/medis yang benar-benar berseberangan agar bervariasi.
+
+            ATURAN JUDUL KONTEN:
+            - "title" WAJIB sangat menarik, memancing rasa penasaran tinggi (curiosity gap), sedikit provokatif, tapi tetap ilmiah. 
+            - Gunakan teknik copywriting YouTube terbaik (contoh gaya: "Mengapa Otakmu Membenci...", "Rahasia Gelap di Balik...", "1 Tanda Mengejutkan Bahwa...").
+
+            Gaya Visual yang dipilih: "${style}".
+            Jumlah adegan (scenes): Sekitar ${sceneCount} adegan per opsi agar pergantian gambar cepat dan dinamis.
+
+            ATURAN FORMAT KETAT:
+            1. "hook_narration": WAJIB maksimal 2 kalimat, dan WAJIB diawali persis dengan frasa "Pikir deh, ".
+            2. "scenes": Array of objects.
+            3. "scenes.voiceover": SANGAT PENDEK DAN CEPAT (FAST-PACED). Maksimal 5-10 kata per adegan agar gambar sering berganti.
+            4. "scenes.visual": DESKRIPSI VISUAL SPESIFIK & DETAIL untuk prompt AI Image Generator dengan 5 unsur: (a) Subjek utama & ciri, (b) Ekspresi wajah/emosi, (c) Aksi/gerakan, (d) Latar belakang/properti, dan (e) Angle kamera. Semua disesuaikan secara mutlak dengan gaya "${style}".
+            5. ADEGAN PENUTUP: Scene terakhir WAJIB berisi ajakan interaksi untuk Subscribe dan Menulis Komentar yang relevan dengan topik, dengan visual menggambarkan ikon tombol subscribe dan komentar dalam gaya "${style}".
+            6. "thumbnail_prompt": Deskripsi visual HANYA UNTUK THUMBNAIL (ASPEK RASIO 16:9). Harus dramatis, memiliki kontras warna tinggi, fokus pada ekspresi wajah yang berlebihan/mengejutkan (jika ada subjek manusia), dan mengundang rasa penasaran ekstrem (High CTR). Tanpa teks/tulisan di dalam gambarnya.
+        `;
+
+        const payload = {
+            contents: [{ parts: [{ text: promptText }] }],
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "ARRAY",
+                        items: {
+                            type: "OBJECT",
+                            properties: {
+                                title: { type: "STRING" },
+                                theme: { type: "STRING" },
+                                scientific_reference: { type: "STRING" },
+                                hook_narration: { type: "STRING" },
+                                thumbnail_prompt: { type: "STRING" },
+                                scenes: {
+                                    type: "ARRAY",
+                                    items: {
+                                        type: "OBJECT",
+                                        properties: {
+                                            visual: { type: "STRING" },
+                                            voiceover: { type: "STRING" }
+                                        },
+                                        required: ["visual", "voiceover"]
+                                    }
+                                },
+                                caption: { type: "STRING" },
+                                hashtags_long: { type: "STRING" },
+                                hashtags_shorts: { type: "STRING" }
+                            },
+                            required: ["title", "theme", "scientific_reference", "hook_narration", "thumbnail_prompt", "scenes", "caption", "hashtags_long", "hashtags_shorts"]
+                        }
+                    }
+                }
+            };
+
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error(`API Error: ${response.status}`);
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    
+                    const jsonText = result.candidates[0].content.parts[0].text;
+                    aiGeneratedData = JSON.parse(jsonText);
+                    
+                    if(!Array.isArray(aiGeneratedData) || aiGeneratedData.length === 0) {
+                        throw new Error("Format respons AI tidak valid.");
+                    }
+
+                    activeIndex = 0;
+                    renderTabs();
+                    displayContent(activeIndex, style, aspectRatio);
+
+                    loadingIndicator.classList.add('hidden');
+                    contentDisplay.classList.remove('hidden');
+                    setTimeout(() => { contentDisplay.classList.remove('opacity-0'); }, 50);
+
+                } else {
+                     throw new Error("Gagal mengekstrak teks dari respons AI.");
+                }
+
+            } catch (error) {
+                console.error("Fetch error:", error);
+                loadingIndicator.classList.add('hidden');
+                errorMessage.classList.remove('hidden');
+                errorText.innerText = "Terjadi kegagalan saat meminta AI berpikir. Silakan coba lagi. Detail: " + error.message;
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+            }
+        }
+
+        function renderTabs() {
+            topicTabsContainer.innerHTML = '';
+            aiGeneratedData.forEach((option, index) => {
+                const shortLabel = option.title.split(' ').slice(0, 3).join(' ') + '...';
+                const btn = document.createElement('button');
+                btn.innerHTML = `<span class="opacity-75 mr-1 font-normal">Ide ${index + 1}:</span> ${shortLabel}`;
+                btn.onclick = () => {
+                    activeIndex = index;
+                    updateTabStyles();
+                    const currentStyle = document.getElementById('visualStyleSelect').options[document.getElementById('visualStyleSelect').selectedIndex].text;
+                    const currentRatio = document.getElementById('aspectRatioSelect').value;
+                    displayContent(activeIndex, currentStyle, currentRatio);
+                };
+                topicTabsContainer.appendChild(btn);
+            });
+            updateTabStyles();
+        }
+
+        function updateTabStyles() {
+            const buttons = topicTabsContainer.querySelectorAll('button');
+            buttons.forEach((btn, index) => {
+                if (index === activeIndex) {
+                    btn.className = 'whitespace-nowrap px-6 py-3 mx-1 my-1 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none bg-slate-900 text-white shadow-lg transform scale-105 border-b-4 border-slate-700';
+                } else {
+                    btn.className = 'whitespace-nowrap px-6 py-3 mx-1 my-1 rounded-xl text-sm font-semibold transition-all duration-300 focus:outline-none bg-white text-slate-500 border border-slate-200 hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-200 transform hover:scale-105';
+                }
+            });
+        }
+
+        function displayContent(index, styleLabel, ratioLabel) {
+            const content = aiGeneratedData[index];
+            
+            titleOutput.innerText = content.title;
+            themeOutput.innerText = content.theme;
+            referenceOutput.innerText = content.scientific_reference;
+            displayStyle.innerText = styleLabel;
+            displayRatio.innerText = ratioLabel;
+            
+            thumbnailPromptOutput.innerText = `"${content.thumbnail_prompt}"`;
+            
+            // Reset status tombol & container thumbnail
+            document.getElementById('thumbnail_container').classList.add('hidden');
+            document.getElementById('thumbnail_img').src = '';
+            const thumbBtn = document.getElementById('generateThumbnailBtn');
+            thumbBtn.disabled = false;
+            thumbBtn.innerHTML = `
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <span>Generate Gambar Thumbnail</span>
+            `;
+            
+            let hookHtml = `
+                <div class="absolute -left-3 -top-3 text-4xl text-indigo-300 font-serif leading-none">"</div>
+                <span class="font-bold italic text-lg sm:text-xl text-slate-800 border-l-4 border-indigo-500 pl-5 py-3 block bg-indigo-50 rounded-r-2xl shadow-sm relative z-10 leading-relaxed">
+                    ${content.hook_narration}
+                </span>`;
+            hookOutput.innerHTML = hookHtml;
+
+            let scenesHtml = '';
+            if(content.scenes && Array.isArray(content.scenes)) {
+                content.scenes.forEach((scene, i) => {
+                    const uniqueId = `scene_img_${index}_${i}`;
+                    scenesHtml += `
+                        <div class="scene-card flex flex-col md:flex-row bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <!-- Visual Side & Image Generator -->
+                            <div class="md:w-6/12 bg-slate-50 p-5 border-b md:border-b-0 md:border-r border-slate-200 flex flex-col justify-between">
+                                <div>
+                                    <span class="inline-block bg-slate-800 text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider mb-3">
+                                        Adegan ${i + 1}
+                                    </span>
+                                    <div class="flex items-start text-slate-600 text-sm font-medium mb-4">
+                                        <svg class="w-5 h-5 mr-2 flex-shrink-0 text-slate-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <p class="leading-relaxed">${scene.visual}</p>
+                                    </div>
+                                </div>
+
+                                <!-- Area Render Gambar AI -->
+                                <div class="mt-2 pt-3 border-t border-slate-200">
+                                    <div id="${uniqueId}_container" class="hidden mb-3 rounded-xl overflow-hidden border border-slate-300 shadow-inner bg-slate-900 flex justify-center items-center relative group">
+                                        <img id="${uniqueId}_element" class="w-full h-auto max-h-72 object-contain" alt="Generated Visual Scene">
+                                        <a id="${uniqueId}_download" download="scene-${i+1}.png" class="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-slate-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-md flex items-center space-x-1.5 transition-all opacity-0 group-hover:opacity-100">
+                                            <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                            <span>Download</span>
+                                        </a>
+                                    </div>
+                                    <button id="${uniqueId}_btn" onclick="generateSceneImage(${index}, ${i}, '${styleLabel}', '${ratioLabel}')" class="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center justify-center space-x-2">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                        <span>Generate Gambar AI (${ratioLabel})</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Voiceover Side -->
+                            <div class="md:w-6/12 p-5 flex flex-col justify-center bg-white relative group">
+                                <div class="absolute left-0 top-0 bottom-0 w-1 bg-transparent group-hover:bg-indigo-400 transition-colors"></div>
+                                <h4 class="text-[10px] uppercase tracking-widest text-indigo-400 font-bold mb-2 flex items-center">
+                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                                    Narasi Voiceover (Cepat)
+                                </h4>
+                                <p class="text-slate-800 text-lg font-semibold leading-relaxed">"${scene.voiceover}"</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            scenesOutput.innerHTML = scenesHtml;
+
+            captionOutput.innerText = content.caption;
+            hashtagsLongOutput.innerText = content.hashtags_long;
+            hashtagsShortsOutput.innerText = content.hashtags_shorts;
+        }
+
+        async function generateThumbnail() {
+            const content = aiGeneratedData[activeIndex];
+            const btnEl = document.getElementById('generateThumbnailBtn');
+            const containerEl = document.getElementById('thumbnail_container');
+            const imgEl = document.getElementById('thumbnail_img');
+            const downloadEl = document.getElementById('thumbnail_download');
+            
+            const styleLabel = document.getElementById('visualStyleSelect').options[document.getElementById('visualStyleSelect').selectedIndex].text;
+
+            btnEl.disabled = true;
+            btnEl.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-orange-600" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <span>Merender Thumbnail (Mungkin Butuh Waktu)...</span>
+            `;
+
+            const imagePrompt = `Highly engaging YouTube thumbnail, high CTR, very dramatic, vibrant colors. Style: ${styleLabel}. Description: ${content.thumbnail_prompt}. No text or words inside the image.`;
+
+            const payload = {
+                contents: [{
+                    role: 'user',
+                    parts: [{ text: imagePrompt }]
+                }],
+                generationConfig: {
+                    responseModalities: ['IMAGE'],
+                    imageConfig: { aspectRatio: "16:9" }
+                },
+            };
+
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error(`Image API Error: ${response.status}`);
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+
+                if (!part) {
+                    throw new Error("Gagal mendapatkan data gambar dari AI.");
+                }
+
+                const imageUrl = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
+                imgEl.src = imageUrl;
+                downloadEl.href = imageUrl;
+                
+                containerEl.classList.remove('hidden');
+                btnEl.innerHTML = `
+                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>Generate Ulang Thumbnail</span>
+                `;
+            } catch (err) {
+                console.error("Thumbnail generation error:", err);
+                alert("Gagal merender thumbnail. Silakan coba klik generate lagi.");
+                btnEl.innerHTML = `<span>Coba Generate Lagi</span>`;
+            } finally {
+                btnEl.disabled = false;
+            }
+        }
+
+        async function generateSceneImage(topicIndex, sceneIndex, styleLabel, aspectRatio) {
+            const scene = aiGeneratedData[topicIndex].scenes[sceneIndex];
+            const uniqueId = `scene_img_${topicIndex}_${sceneIndex}`;
+            const btnEl = document.getElementById(`${uniqueId}_btn`);
+            const containerEl = document.getElementById(`${uniqueId}_container`);
+            const imgEl = document.getElementById(`${uniqueId}_element`);
+            const downloadEl = document.getElementById(`${uniqueId}_download`);
+
+            btnEl.disabled = true;
+            btnEl.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <span>Sedang Merender Gambar...</span>
+            `;
+
+            const imagePrompt = `High quality illustration in style of ${styleLabel}, depicting: ${scene.visual}. Clean composition, sharp details, vibrant colors suitable for professional educational video storyboard.`;
+
+            const payload = {
+                contents: [{
+                    role: 'user',
+                    parts: [{ text: imagePrompt }]
+                }],
+                generationConfig: {
+                    responseModalities: ['IMAGE'],
+                    imageConfig: { aspectRatio: aspectRatio }
+                },
+            };
+
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error(`Image API Error: ${response.status}`);
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+
+                if (!part) {
+                    throw new Error("Gagal mendapatkan data gambar dari AI.");
+                }
+
+                const imageUrl = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
+                imgEl.src = imageUrl;
+                downloadEl.href = imageUrl;
+                
+                containerEl.classList.remove('hidden');
+                btnEl.innerHTML = `
+                    <svg class="w-4 h-4 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>Generate Ulang Gambar</span>
+                `;
+            } catch (err) {
+                console.error("Image generation error:", err);
+                alert("Gagal merender gambar. Silakan coba klik generate lagi.");
+                btnEl.innerHTML = `<span>Coba Generate Lagi</span>`;
+            } finally {
+                btnEl.disabled = false;
+            }
+        }
+
+        function copyToText(elementId) {
+            const el = document.getElementById(elementId);
+            executeCopy(el.innerText);
+        }
+
+        function copyStoryboard() {
+            if(aiGeneratedData.length === 0) return;
+            const content = aiGeneratedData[activeIndex];
+            
+            let textToCopy = "=== HOOK PEMBUKA ===\n";
+            textToCopy += content.hook_narration + "\n\n";
+            textToCopy += "=== SCRIPT & ARAHAN VISUAL ===\n";
+            
+            if(content.scenes) {
+                content.scenes.forEach((scene, i) => {
+                    textToCopy += `[Adegan ${i+1}]\n`;
+                    textToCopy += `VISUAL: ${scene.visual}\n`;
+                    textToCopy += `VOICEOVER: ${scene.voiceover}\n\n`;
+                });
+            }
+            
+            executeCopy(textToCopy);
+        }
+
+        function executeCopy(text) {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast();
+            } catch (err) {
+                console.error('Failed to copy', err);
+            }
+            
+            document.body.removeChild(textarea);
+        }
+
+        function showToast() {
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+    </script>
+</body>
+</html>
